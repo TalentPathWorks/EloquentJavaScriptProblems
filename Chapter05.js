@@ -62,9 +62,11 @@
  * parameters. Write two versions, one using a loop and one using the some method.
  */
 function every(array, test) {
-  // Your code here.
-}
-
+  if(array.length === 0)return true;
+  
+  return newArray = array.map(test).reduce((accumulator,currentValue)=>currentValue && accumulator)
+};
+console.log(`5-3: Everything`)
 console.log(every([1, 3, 5], n => n < 10));
 // → true
 console.log(every([2, 4, 16], n => n < 10));
