@@ -27,12 +27,11 @@ function reliableMultiply(a, b) {
       const val = primitiveMultiply(a,b);
       return val;
     }catch(err){
-      console.log(`An error has occurred: ${err}`);
+      //console.log(`An error has occurred: ${err}`);
     }
   }
-  
 }
-
+console.log(`Problem 8-1: `)
 console.log(reliableMultiply(8, 8));
 // → 64
 
@@ -73,9 +72,17 @@ const box = {
     return this._content;
   }
 };
-
+console.log(`Problem 8-2: `)
 function withBoxUnlocked(body) {
-  // Your code here.
+  box.unlock();
+  try{
+    body();
+  }catch{(err)=>{
+    console.log(`An error has occurred: ${err}`);
+  }} finally{
+    console.log(`box is locked with ${box.content}`)
+    box.lock();
+  }
 }
 
 withBoxUnlocked(function() {
