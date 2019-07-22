@@ -1,0 +1,22 @@
+{
+  "name": "eloquentjavascriptproblems",
+  "version": "1.0.0",
+  "description": "For webserver",
+  "main": "Chapter20.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zyxel-1/EloquentJavaScriptProblems.git"
+  },
+  "author": "Roberto Sanchez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zyxel-1/EloquentJavaScriptProblems/issues"
+  },
+  "homepage": "https://github.com/Zyxel-1/EloquentJavaScriptProblems#readme",
+  "dependencies": {
+    "mime": "^2.4.4"
+  }
+}
