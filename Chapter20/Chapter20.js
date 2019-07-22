@@ -105,8 +105,18 @@ methods.PUT = async function(request) {
 };
 
 methods.MKCOL = async function(request){
-  await fs.mkdir(`./${request.url}`,(err)=>{
-    console.log(`Something went wrong: ${err}`)
-  })
-  return {status: 201}
+   
+  try{
+    await fs.access(request.url,()=>{
+      
+    });
+    await fs.promises.mkdir(`./${request.url}`,()=>{
+
+    });
+    return {status: 201}
+  }catch(err){
+    console.log(`Error happended: ${err}`)
+    return {status: 500}
+  }
+  
 }
