@@ -127,8 +127,33 @@ function textScripts(text) {
     return `${Math.round(count * 100 / total)}% ${name}`;
   }).join(", ");
 }
+/**
+ * Gets the dominant direction
+ * @param {String} text Any text
+ */
 function dominantDirection(text) {
-  return characterScript(text.codePointAt(0))
+  // Finds the language and returns
+  return SCRIPTS.filter(item => item.name === dominantLanguage(text).trim())[0].direction
+}
+
+/**
+ * 
+ * @param {String} text Any string to determine the dominant language
+ * @returns {String} Returns the dominant language
+ */
+function dominantLanguage(text){
+  let result = textScripts(text).split(',').map(value => value.split('%'));
+
+  if(result.length === 1) return result[0][1];
+  // Pretty sure theres a better way
+  let largest = [0,''];
+
+  result.forEach((value)=>{
+    if(parseInt(value[0],10) > parseInt(largest[0],10)){
+      largest = value;
+    }
+  })
+  return largest[1];
 }
 console.log(`5-4: Dominant Writting Direction `)
 console.log(dominantDirection("Hello!"));
