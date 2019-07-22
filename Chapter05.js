@@ -15,7 +15,8 @@
  const reducer = (accumulator, currentValue) =>accumulator.concat(currentValue)
  let arrays = [[1,2,3],[4,5],[6]];
  const flattenArray = arrays.reduce(reducer);
- console.log(flattenArray);
+ console.log(`5-1: Flattening`);
+ console.log(flattenArray)
  // -> [1,2,3,4,5,6]
 
 
@@ -31,8 +32,21 @@
   * When defining the function, you can use regular loop to do the actual looping.
   */
  
-  // Your code here.
-  //loop(3,n=>n>0,n=>n-1, console.log);
+  function loop (start, endingFn, action,displayValue) {
+    let i = start;
+    for(i;endingFn(i);i = action(i)){
+      displayValue(i);
+    }
+    /*
+    // Another way
+    while(endingFn(i)){
+      displayValue(i);
+      i = action(i);
+    }
+    */
+  }
+  console.log(`5-2: Your Own Loop:`)
+  loop(3,n=>n>0,n=>n-1, console.log);
   //-> 3
   //-> 2
   //-> 1
