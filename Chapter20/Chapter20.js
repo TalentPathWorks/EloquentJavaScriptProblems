@@ -16,6 +16,7 @@ const fs = require("fs");
 const {createServer} = require("http");
 
 const methods = Object.create(null);
+const PORT = 8000;
 
 createServer((request, response) => {
   let handler = methods[request.method] || notAllowed;
@@ -29,7 +30,7 @@ createServer((request, response) => {
        if (body && body.pipe) body.pipe(response);
        else response.end(body);
     });
-}).listen(8000);
+}).listen(PORT,()=>console.log(`Now listening on port: ${PORT}`));
 
 async function notAllowed(request) {
   return {
@@ -87,36 +88,23 @@ methods.DELETE = async function(request) {
   else await unlink(path);
   return {status: 204};
 };
-const {createWriteStream} = require("fs");
 
-function pipeStream(from, to) {
-  return new Promise((resolve, reject) => {
-    from.on("error", reject);
-    to.on("error", reject);
-    to.on("finish", resolve);
-    from.pipe(to);
-  });
-}
-
-methods.PUT = async function(request) {
-  let path = urlPath(request.url);
-  await pipeStream(request, createWriteStream(path));
-  return {status: 204};
-};
-
-methods.MKCOL = async function(request){
+methods.MKCOL = async function(request,response){
    
   try{
-    await fs.access(request.url,()=>{
-      
+    await fs.access(request.url,fs.constants.F_OK,(err)=>{
+      //Throws error if it alrady exists
+      if(!err) {
+        throw new Error(`Directory already Exists.`)
+      }
     });
-    await fs.promises.mkdir(`./${request.url}`,()=>{
-
+    await fs.promises.mkdir(`./${request.url}`,(err)=>{
+      if(err)
+        throw new Error(`Failed to make directory: ${err}`)
     });
-    return {status: 201}
+    return {status: 201,body: String('Directory made.')}
   }catch(err){
-    console.log(`Error happended: ${err}`)
-    return {status: 500}
+    return {status: 500, body: String(`Something bad happended: ${err} `)}
   }
   
 }
